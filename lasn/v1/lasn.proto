@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+option go_package = ".;protos";
+
+package lasn.v1;
+
+message LinkRequest {
+  int64 user_id = 1;
+  int64 nearby_user_id = 2;
+}
+
+message LinkResponse {}
+
+message FetchRequest {
+  int64 user_id = 1;
+}
+
+message UserSummary {
+  int64 user_id = 1;
+  string name = 2;
+  string thumbnail_uri = 3;
+}
+
+message FetchResponse {
+  repeated UserSummary user_summaries = 1;
+}
+
+message SubscribeRequest {
+  int64 user_id = 1;
+}
+
+message SubscribeResponse {}
+
+service LasnService {
+  // Links two LASNs by connecting users in the request.
+  rpc Link(LinkRequest) returns (LinkResponse);
+
+  // Retrieves the users in the user's LASN with matching filters.
+  rpc Fetch(FetchRequest) returns (FetchResponse);
+
+  // Subscribes to the receive updates on the LASN.
+  rpc Subscribe(SubscribeRequest)
+      returns (stream SubscribeResponse);
+}
