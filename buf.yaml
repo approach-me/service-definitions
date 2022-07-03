@@ -2,8 +2,6 @@ version: v1
 lint:
   use:
     - DEFAULT
-  except:
-    - PACKAGE_VERSION_SUFFIX
 breaking:
   use:
     - FILE
