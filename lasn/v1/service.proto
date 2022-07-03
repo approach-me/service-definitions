@@ -4,7 +4,7 @@ option go_package = ".;protos";
 
 package lasn.v1;
 
-import "models.proto";
+import "lasn/v1/models.proto";
 
 service LasnService {
   // Links two LASNs by connecting users in the request.
