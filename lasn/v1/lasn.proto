@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option go_package = ".;protos";
 
-package lasn;
+package lasn.v1;
 
 message Empty {}
 
