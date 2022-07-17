@@ -39,11 +39,11 @@ message DisconnectRequest {
 
 message DisconnectResponse {}
 
-message SubscribeStreamRequest {
+message SubscribeRequest {
   string user_id = 1;
 }
 
-message SubscribeStreamResponse {
+message SubscribeResponse {
   repeated UserSummary user_summaries = 1;
 }
 
@@ -61,6 +61,6 @@ service LasnService {
   rpc Disconnect(DisconnectRequest) returns (DisconnectResponse);
 
   // Subscribes to the receive updates on the LASN.
-  rpc Subscribe(SubscribeStreamRequest)
-      returns (stream SubscribeStreamResponse);
+  rpc Subscribe(SubscribeRequest)
+      returns (stream SubscribeResponse);
 }
