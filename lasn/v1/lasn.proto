@@ -4,39 +4,61 @@ option go_package = ".;protos";
 
 package lasn.v1;
 
+message UserSummary {
+  string user_id = 1;
+  string device_id = 2;
+  string name = 3;
+  int64 birthdate = 4;
+  string thumbnail_uri = 5;
+}
+
+message CreateOrUpdateNodeRequest {
+    UserSummary user_summary = 1;
+}
+
+message CreateOrUpdateNodeResponse {}
+
 message LinkRequest {
-  int64 user_id = 1;
-  int64 nearby_user_id = 2;
+  string user_id = 1;
+  string nearby_device_id = 2;
 }
 
 message LinkResponse {}
 
 message FetchRequest {
-  int64 user_id = 1;
-}
-
-message UserSummary {
-  int64 user_id = 1;
-  string name = 2;
-  string thumbnail_uri = 3;
+  string user_id = 1;
 }
 
 message FetchResponse {
   repeated UserSummary user_summaries = 1;
 }
 
-message SubscribeRequest {
-  int64 user_id = 1;
+message DisconnectRequest {
+  string user_id = 1;
 }
 
-message SubscribeResponse {}
+message DisconnectResponse {}
+
+message SubscribeRequest {
+  string user_id = 1;
+}
+
+message SubscribeResponse {
+  repeated UserSummary user_summaries = 1;
+}
 
 service LasnService {
+  // Creates user node in LASN if not present, otherwise updates it.
+  rpc CreateOrUpdateNode(CreateOrUpdateNodeRequest) returns (CreateOrUpdateNodeResponse);
+
   // Links two LASNs by connecting users in the request.
   rpc Link(LinkRequest) returns (LinkResponse);
 
   // Retrieves the users in the user's LASN with matching filters.
   rpc Fetch(FetchRequest) returns (FetchResponse);
+
+  // Removes all edges from this user in LASN.
+  rpc Disconnect(DisconnectRequest) returns (DisconnectResponse);
 
   // Subscribes to the receive updates on the LASN.
   rpc Subscribe(SubscribeRequest)
